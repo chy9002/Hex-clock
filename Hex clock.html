@@ -20,7 +20,7 @@ __          ___    _       _______ ________      ________ _____   __          __
 	<meta name="Keywords" content="Jacopo Colò, Jacopo Colo, hex, clock, hexadecimal, colors">
 	<meta name="description"
 		content="A precise hexadecimal color clock that goes the whole 24 hours color range, from #000000 to #235959.">
-	<script src="./Hex clock_files/jquery-latest.js"></script>
+	<script src="https://code.jquery.com/jquery-latest.js"></script>
 	<link href="./Hex clock_files/css" rel="stylesheet" type="text/css">
 	<meta property="og:image" content="http://www.jacopocolo.com/hexclock/preview.jpg">
 	<style>
@@ -46,6 +46,18 @@ __          ___    _       _______ ________      ________ _____   __          __
 			display: block;
 			min-width: 200px;
 			font-weight: 100;
+			text-shadow: 0 0 10px gray, 0 0 20px gray, 0 0 30px gray, 0 0 40px gray;
+		}
+
+		#time {
+			color: black;
+			font-family: 'Lato', Helvetiva, Arial, sans-serif;
+			text-align: center;
+			font-size: 2.5em;
+			display: block;
+			min-width: 100px;
+			font-weight: 10;
+			text-shadow: 0 0 10px grey, 0 0 20px grey, 0 0 30px grey, 0 0 40px grey;
 		}
 
 		#what {
@@ -100,12 +112,12 @@ __          ___    _       _______ ________      ________ _____   __          __
 			<p id="hex">#130718</p>
 			<p id="time">#130718</p>
 		</div>
-		<p id="what"><a id="question" href="http://www.jacopocolo.com/hexclock/#"
+		<!-- <p id="what"><a id="question" href="http://www.jacopocolo.com/hexclock/#"
 				onclick="$(&#39;#explanation&#39;).fadeIn();">What is this?</a><span id="explanation"
 				style="display: none;"> A precise <a href="http://en.wikipedia.org/wiki/Web_colors#Hex_triplet"
 					target="_blank">hexadecimal color</a> clock. It goes the whole 24 hours color range, from #000000 to
 				#235959. Yes, it's always very dark. For a more beautiful color clock, visit <a
-					href="http://thecolourclock.co.uk/" target="_blank">the colour clock</a>.</span></p>
+					href="http://thecolourclock.co.uk/" target="_blank">the colour clock</a>.</span></p> -->
 	</div>
 
 	<script>
@@ -115,18 +127,22 @@ __          ___    _       _______ ________      ________ _____   __          __
 			var h = d.getHours();
 			var m = d.getMinutes();
 			var s = d.getSeconds();
-			var r = Math.round(h / 24 * 255);
-			var g = Math.round(m / 60 * 255);
-			var b = Math.round(s / 60 * 255);
+			var ud = d.getTime();
+			var r = Math.round(ud / 1000 / 3600 % 255);
+			var g = Math.round(ud / 1000 / 60 % 255);
+			var b = Math.round(ud / 1000 % 255);
 			if (h <= 9) { h = '0' + h };
 			if (m <= 9) { m = '0' + m };
 			if (s <= 9) { s = '0' + s };
+			var r_str = r.toString(16).toUpperCase();
+			var g_str = g.toString(16).toUpperCase();
+			var b_str = b.toString(16).toUpperCase();
 
-			if (r <= 15) { r = '0' + r };
-			if (g <= 15) { g = '0' + g };
-			if (b <= 15) { b = '0' + b };
+			if (r <= 15) { r_str = '0' + r_str };
+			if (g <= 15) { g_str = '0' + g_str };
+			if (b <= 15) { b_str = '0' + b_str };
 
-			var color = '#' + r + g + b;
+			var color = '#' + r_str + g_str + b_str;
 			var time = [h, m, s].join(":");
 
 			$("div.background").css("background-color", color);
